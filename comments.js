@@ -1,7 +1,6 @@
 // Create web server and listen for requests
 // Use express and body-parser
 // Use the comments API to manage comments
-// Use the comments API to manage comments
 
 var express = require('express');
 var bodyParser = require('body-parser');
