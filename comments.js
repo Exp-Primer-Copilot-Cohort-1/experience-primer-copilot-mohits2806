@@ -1,45 +1,19 @@
-// Create web server and listen on port 8080
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
+// create a web server that listens on port 3000
+// when a request comes in for /comments
+// send back a JSON object with some comments
+
+var http = require('http');
 var fs = require('fs');
 
-app.use(bodyParser.json()); // for parsing application/json
-
-app.get('/comments', function(req, res) {
-  fs.readFile(__dirname + '/comments.json', 'utf8', function(err, data) {
-    if (err) {
-      console.log(err);
-      res.status(500).send('Server error');
-      return;
-    }
-    res.send(JSON.parse(data));
-  });
+var server = http.createServer(function(req, res) {
+  console.log('request was made: ' + req.url);
+  res.writeHead(200, {'Content-Type': 'application/json'});
+  var myObj = {
+    name: 'Ryu',
+    job: 'Ninja',
+    age: 29
+  };
+  res.end(JSON.stringify(myObj));
 });
 
-app.post('/comments', function(req, res) {
-  fs.readFile(__dirname + '/comments.json', 'utf8', function(err, data) {
-    if (err) {
-      console.log(err);
-      res.status(500).send('Server error');
-      return;
-    }
-    var comments = JSON.parse(data);
-    comments.push(req.body);
-    fs.writeFile(__dirname + '/comments.json', JSON.stringify(comments, null, 4), function(err) {
-      if (err) {
-        console.log(err);
-        res.status(500).send('Server error');
-        return;
-      }
-      res.send('Success');
-    });
-  });
-});
-
-app.listen(8080, function() {
-  console.log('Server started: http://localhost:8080/');
-});
-```
-
-##
+server.listen(3000, '')
